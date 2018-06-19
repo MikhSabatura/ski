@@ -1,3 +1,5 @@
+package participants;
+
 import packets.Converter;
 import packets.FilePacket;
 import packets.MessagePacket;
@@ -54,7 +56,7 @@ public class Server {
         }
 
         try {
-            System.out.printf("Server created\nAddress: %s\nRequested speed: %d kb\\s\n",
+            System.out.printf("participants.Server created\nAddress: %s\nRequested speed: %d kb\\s\n",
                     InetAddress.getLocalHost().getHostAddress(), speed);
         } catch (UnknownHostException e) {
             System.err.println("COULDN'T GET LOCALHOST ADDRESS");
@@ -69,7 +71,7 @@ public class Server {
 
     private void processInitArgs(String[] args) {
         if (args.length != 4) {
-            System.out.printf("Server: illegal number of arguments, 4 are required instead of %d\n", args.length);
+            System.out.printf("participants.Server: illegal number of arguments, 4 are required instead of %d\n", args.length);
             System.exit(1);
         }
 
@@ -79,7 +81,7 @@ public class Server {
                     try {
                         fileSocket = new DatagramSocket(Integer.parseInt(args[++i]));
                     } catch (NumberFormatException e) {
-                        System.out.printf("Server: '%s' is not a valid port number\n", args[i]);
+                        System.out.printf("participants.Server: '%s' is not a valid port number\n", args[i]);
                         System.exit(1);
                     } catch (SocketException e) {
                         System.err.println("COULDN'T CREATE A FILE SOCKET");
@@ -90,12 +92,12 @@ public class Server {
                     try {
                         speed = Integer.parseInt(args[++i]);
                     } catch (NumberFormatException e) {
-                        System.out.printf("Server: '%s' is not a valid speed\n", args[i]);
+                        System.out.printf("participants.Server: '%s' is not a valid speed\n", args[i]);
                         System.exit(1);
                     }
                     break;
                 default:
-                    System.out.printf("Server: '%s' is not a valid command.\n", args[i]);
+                    System.out.printf("participants.Server: '%s' is not a valid command.\n", args[i]);
                     System.exit(1);
             }
         }
@@ -111,7 +113,7 @@ public class Server {
             messagePacket = mesTrans.waitForPacket(Packet.START);
             fileSocket.connect(messagePacket.getSourceInetAddress(), Converter.bytesToInt(messagePacket.getData()));
             messageSocket.connect(messagePacket.getSourceInetAddress(), 7770);
-            System.out.println("Client connected " + fileSocket.getInetAddress());
+            System.out.println("participants.Client connected " + fileSocket.getInetAddress());
 
             file = new File(receiveFileInfo());
             System.out.println("File name: " + file.getName());

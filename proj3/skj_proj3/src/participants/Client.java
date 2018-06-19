@@ -1,3 +1,5 @@
+package participants;
+
 import packets.Converter;
 import packets.FilePacket;
 import packets.MessagePacket;
@@ -55,7 +57,7 @@ public class Client {
         }
 
 
-        System.out.printf("Client initialized\nFile to sendPacket: %s\nServer address: %s\n",
+        System.out.printf("participants.Client initialized\nFile to sendPacket: %s\nparticipants.Server address: %s\n",
                 file.getName(), serverAddress.getHostAddress() + ":" + serverPort);
 
     }
@@ -68,7 +70,7 @@ public class Client {
 
     private void processInitArgs(String[] args) {
         if (args.length > 0 && args.length != 6) {
-            System.out.printf("Client: illegal number of arguments, 6 are required instead of %d\n", args.length);
+            System.out.printf("participants.Client: illegal number of arguments, 6 are required instead of %d\n", args.length);
             System.exit(1);
         }
 
@@ -78,7 +80,7 @@ public class Client {
                     try {
                         serverPort = Integer.parseInt(args[++i]);
                     } catch (NumberFormatException e) {
-                        System.out.printf("Client: '%s' is not a valid port number\n", args[i]);
+                        System.out.printf("participants.Client: '%s' is not a valid port number\n", args[i]);
                         System.exit(1);
                     }
                     break;
@@ -86,23 +88,23 @@ public class Client {
                     try {
                         serverAddress = InetAddress.getByName(args[++i]);
                     } catch (Exception e) {
-                        System.out.printf("Client: '%s' is not a valid IP address\n", args[i]);
+                        System.out.printf("participants.Client: '%s' is not a valid IP address\n", args[i]);
                         System.exit(1);
                     }
                     break;
                 case "-file":
                     file = new File(args[++i]);
                     if (!file.exists()) {
-                        System.out.printf("Client: the file '%s' doesn't exist\n", args[i]);
+                        System.out.printf("participants.Client: the file '%s' doesn't exist\n", args[i]);
                         System.exit(1);
                     }
                     if (file.isDirectory()) {
-                        System.out.printf("Client: the given file '%s' is a directory\n", args[i]);
+                        System.out.printf("participants.Client: the given file '%s' is a directory\n", args[i]);
                         System.exit(1);
                     }
                     break;
                 default:
-                    System.out.printf("Client: '%s' is not a valid command.\n", args[i]);
+                    System.out.printf("participants.Client: '%s' is not a valid command.\n", args[i]);
                     System.exit(1);
             }
         }
