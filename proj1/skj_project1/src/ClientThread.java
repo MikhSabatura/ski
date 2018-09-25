@@ -8,6 +8,7 @@ public class ClientThread implements Runnable {
     private Agent agent;
     private Socket toClientSocket;
 
+    private int id;
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
@@ -34,10 +35,10 @@ public class ClientThread implements Runnable {
                         out.flush();
                         break;
                     case ADD: // establish connection to the serverSocket of the agent
-                        agent.addAgent(in);
+                        id = agent.addAgent(in);
                         break;
                     case DEL:
-                        agent.deleteAgent(in);
+                        agent.deleteAgent(id);
                         return;
                     case SYN:
                         agent.synchronizeClock();
@@ -59,6 +60,9 @@ public class ClientThread implements Runnable {
             System.err.println("ILLEGAL SIGNAL");
             e.printStackTrace();
         } catch (EOFException e) {
+            if(id != -1) {
+                agent.deleteAgent(id);
+            }
             System.out.println("Agent " + toClientSocket.getRemoteSocketAddress() + " disconnected");
         } catch (Exception e) {
             e.printStackTrace();

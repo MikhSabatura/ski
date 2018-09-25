@@ -156,9 +156,10 @@ public class Agent {
 
     }
 
-    public void addAgent(ObjectInputStream in) {
+    public int addAgent(ObjectInputStream in) {
+        int id = -1;
         try {
-            int id = in.readInt();
+            id = in.readInt();
             InetSocketAddress address = (InetSocketAddress) in.readObject();
 
             Socket socket = new Socket(address.getAddress(), address.getPort());
@@ -171,6 +172,7 @@ public class Agent {
             System.err.println("COULDN'T ADD THE AGENT TO THE LIST");
             e.printStackTrace();
         }
+        return id;
     }
 
     public void synchronizeClock() {
@@ -212,9 +214,8 @@ public class Agent {
 
     }
 
-    public void deleteAgent(ObjectInputStream in) {
+    public void deleteAgent(int id) {
         try {
-            int id = in.readInt();
             agents.get(id).close();
             outputStreams.get(id).close();
             inputStreams.get(id).close();
